@@ -1,0 +1,60 @@
+su 
+nano /etc/apt/sources.list
+deb http://deb.debian.org/debian buster main
+apt-get update
+apt-get install sudo
+nano /etc/sudoers
+exit
+sudo nano /etc/network/interfaces
+sudo nano /etc/hostname
+sudo nano /etc/host
+sudo dpkg-reconfigure tzdata
+sudo apt-get install apache2 apache2-utils autoconf gcc libc6 libgd-dev make php python python3 tree unzip wget
+cd /tmp
+wget nagio 4.4.5
+tar -zxf nagios 4.4.and cd nagios 4.4.5
+sudo ./configure --with-httpd-conf=/etc/apache2/sites-enabled
+sudo make all
+sudo make install-groups-users
+sudo passwd nagios
+sudo usermod -a -G nagios www-data
+sudo make install
+sudo make install-daemoninit
+sudo make install-commandmode
+sudo make install-config
+sudo make install-webconf
+sudo a2enmod rewrite
+sudo a2enmod cgi
+sudo htpasswd -c /usr/local/nagios/etc/htpasswd.users nagiosadmin
+sudo /usr/local/nagios/bin/nagios -V /usr/local/nagios/etc/nagios.cfg
+sudo systemctl restart apache2
+sudo systemctl restart nagios
+sudo apt-get install automake autotools-dev bc build-essential dc gawk gettext libmcrypt-dev libnet-snmp-perl libssl-dev snmp
+cd /tmp
+wget nagios plugin
+tar -zxf and cd 
+sudo ./tools/setup
+sudo ./configure
+sudo make
+sudo make install
+sudo apt-get install wget libsqlite3-0
+wget ncpa 219 amd 64db
+sudo dpkg -i ncpa219 amd 64db
+sudo nano /usr/local/ncpa/etc/napa.cfg
+sudo systemctl restart ncpa_listener.service
+cd /usr/local/nagios/libexec
+sudo wget check_ncpa/py
+sudo chmod 755 /usr/local/nagios/libexec/check_ncpa
+sudo ./check_ncpa.py -V
+sudo ./check_ncpa.py -t admin@123 -H window ip -M memory/virtual
+cd ..
+cd etc/objects
+sudo nano commands.cfg
+cd ..
+sudo nano nagios.cfg 51 uncomment
+cd objects
+sudo nano template.cfg
+cd ..
+sudo mkdir servers
+cd servers
+sudo nano w1.cfg
