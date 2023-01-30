@@ -1,0 +1,65 @@
+sudo apt-get install openssl wget tree apache2 dnsutils ssh
+cd /etc/bind/
+sudo cp db.127 db.rvs.web
+sudo cp db.local db.fwd.web
+sudo nano named.conf.local
+sudo nano named.conf.options
+sudo nano /etc/resolv.conf
+sudo nano db.fwd.web
+sudo nano db.rvs.web
+sudo systemctl restart bind9
+sudo systemctl status bind9
+nslookup ser.shuhari.local
+sudo nano /etc/resolv.conf
+nslookup www.shuhari.local
+nslookup ns1.shuhari.local
+nslookup www,ns1,ser,
+nslookup ip all
+subca sudo nano etc/resolv.conf
+nslookup  subca.shuhari.local
+nslookup all ip
+sudo nano /etc/dhcp/dhclient.conf
+rootca same
+mkdir ca
+cd ca
+mkdir -p certs crl newcerts private subca/csr subca/certs
+tree
+chmod 700 private
+touch index.txt
+touch index.txt.attr
+echo 1000 > serial
+echo 1000 > crlnumber
+sudo apt-get install wget
+wget rootca.cnf
+sudo nano rootca.cnf
+openssl genrsa -aes256 -out private/ca.key.pem 4096
+chmode 400 private/ca.key/pem
+openssl req -config rootca.cnf -key private/ca.key.pem -new -x509 -days7300 certs/ca/cert.pem
+chmod 444 certs/ca.cert.pem
+subca mkdir subca
+cd subca mkdir certs crl csr newcerts.private
+chmod 700 private
+touch index.txt
+touch index.txt.attr
+echo 1000 > serial
+echo 1000 > crlnumber
+tree
+wget subca.cnf 
+openssl genrsa -aes256 -out private /subca.key.pem4096
+chmod 400 private/subca.key.pem
+sudo nano subca.cnf
+openssl req -config subca.cnf -new -sha256 -key private/subca.key.pem -out/subca.pem
+scp -rv csr/subca/csr/pem shuhari@192.168.80,103/home/shuhari
+rootca cd ca
+openssl ca -confing rootca.cnf -extensions v3_intermediate_ca  -days 3650 -notext -md sha256 -in subca/csr/subca.csr/pem -out subca/certs/subca.cert.pem
+rootca
+chmod 444 subca/certs/subca.cert.pem
+openssl verify -CAfile certs/ca.cert.pem.subca/certs/subca.cert.pem
+scp subca/cert/ca -chain.cert.pem subca/certs/ca -chian/certs/pem shuhari@192.168.80.102:/home/shuhari/subca/certs
+ser mkdir certs
+cd certs
+wget subca.cnf
+openssl genrsa -out  www.shuhari.local.key.pem 2048
+chmod 400 www.shuhari.local.key.pem openssl req -config subca.cnf -key www.shuhari.local.key.pem -new -sha256 -out www.shuhari.local.csr.pem
+
+ 
